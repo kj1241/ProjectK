@@ -1,0 +1,2 @@
+C:\Users\Mr_K\Desktop\ProjectK\x64\Debug\ProjectK.exe
+C:\Users\Mr_K\Desktop\ProjectK\x64\Debug\ProjectK.pdb
