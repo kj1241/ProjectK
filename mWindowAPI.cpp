@@ -49,7 +49,7 @@ void mWindowAPI::lnitWinAPI()
 	//윈도우 창 만들기
 
 
-	hWnd = CreateWindow(name, name, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 300, 300, nullptr, nullptr, hInstance, nullptr);
+	hWnd = CreateWindow(name, name, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, mClientWidth, mClientHeight, nullptr, nullptr, hInstance, nullptr);
 	if (!hWnd)
 		throw std::out_of_range("hWnd is fail");
 

@@ -4,6 +4,7 @@
 //#endif
 #include "pch.h"
 #include "mD3d12.h"
+#include "mGameTime.h"
 
 using namespace std;
 
@@ -13,10 +14,11 @@ protected:
 	HINSTANCE  hInstance;
 	HWND hWnd;
 	LPCTSTR name;
-	int mClientWidth = 800;  //창 가로
-	int mClientHeight = 600; //창 세로
+	int mClientWidth = 1600;  //창 가로
+	int mClientHeight = 900; //창 세로
 
 	mD3d12 mDirectX12;
+	mGameTimer mTimer; // 타이머
 
 protected:
 	//bool Draw(HWND hWnd);  //디바이스 초기화

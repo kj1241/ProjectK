@@ -15,6 +15,65 @@ D3D12_CPU_DESCRIPTOR_HANDLE mD3d12::DepthStencilView() const
 	return mDsvHeap->GetCPUDescriptorHandleForHeapStart();
 }
 
+void mD3d12::LoadPipeline()
+{
+	//IDXGIFactory 화면 전환 처리  -> 윈도우 8이상 지원
+	//IDXGIFactory1 -> 스왑 체인을 만들지 않고도 Direct3D 장치를 만들 수 있음  IDXGIFactory 같이 사용하면 안됨
+	//각계층 상속받는 형태
+#if defined(DEBUG) || defined(_DEBUG) 
+// 디버그계층 활성화하면 활성장치 무효화
+	{
+		EnableDebugLayer();
+		dxgiFactoryFlags |= DXGI_CREATE_FACTORY_DEBUG;
+	}
+#endif
+	ThrowIfFailed(CreateDXGIFactory2(dxgiFactoryFlags, IID_PPV_ARGS(&mdxgiFactory)));
+	
+	
+	//개인적으로 찾아보기엔 direct 12가 지원안해주는 컴퓨터에서는 레이터라이저로 실행됨. 원래는 어뎁터연결해서 끌고와줘서 뿌려줘야됨.
+	Microsoft::WRL::ComPtr<IDXGIAdapter> pWarpAdapter;
+	ThrowIfFailed(mdxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&pWarpAdapter)));
+
+	ThrowIfFailed(D3D12CreateDevice(pWarpAdapter.Get(), D3D_FEATURE_LEVEL_12_1, IID_PPV_ARGS(&md3dDevice)));
+	
+	
+	//하드웨어 어댑터 있을경우 코딩을 해줘야되는 일딴 보류.... 추가로 디바이스 장치 관련해서 가지고와야되기때문에. 
+	/*
+	Microsoft::WRL::ComPtr<IDXGIAdapter1> hardwareAdapter;
+	GetHardwareAdapter(factory.Get(), &hardwareAdapter);
+	ThrowIfFailed(D3D12CreateDevice(hardwareAdapter.Get(),	D3D_FEATURE_LEVEL_12_1,	IID_PPV_ARGS(&mDevice))); //그래픽 카드 장치마다 레벨 계층도 확인해서 따로 코딩해줘야됨. 일딴 direct 울트라는 12_2부터.
+	*/
+	
+	//울타리 만들기
+	ThrowIfFailed(md3dDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence)));
+
+	mRtvDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	mDsvDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+	mCbvSrvUavDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	//품질지원확인
+	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevels;
+	msQualityLevels.Format = mBackBufferFormat;
+	msQualityLevels.SampleCount = 4;
+	msQualityLevels.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
+	msQualityLevels.NumQualityLevels = 0;
+	ThrowIfFailed(md3dDevice->CheckFeatureSupport(D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS, &msQualityLevels, sizeof(msQualityLevels)));
+
+	m4xMsaaQuality = msQualityLevels.NumQualityLevels;
+	assert(m4xMsaaQuality > 0 && "Unexpected MSAA quality level.");
+
+#ifdef _DEBUG
+	LogAdapters(); //어뎁터 만들기.
+#endif
+
+	CreateCommandObjects();
+	CreateSwapChain();
+	CreateRtvAndDsvDescriptorHeaps();
+
+}
+
+
+
 void mD3d12::EnableDebugLayer()
 {
 	Microsoft::WRL::ComPtr<ID3D12Debug> debugInterface;
@@ -191,50 +250,9 @@ mD3d12::mD3d12(int mClientWidth, int mClientHeight) : mClientWidth(mClientWidth)
 bool mD3d12::InitD3D(HWND hwnd)
 {
     hWnd = hwnd;
+	LoadPipeline();
 
-#if defined(DEBUG) || defined(_DEBUG) 
-		EnableDebugLayer();
-#endif
-
-		ThrowIfFailed(CreateDXGIFactory1(IID_PPV_ARGS(&mdxgiFactory)));
-		//하드웨어 디바이스 만들기
-		HRESULT hardwareResult = D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&md3dDevice));
-
-		//warp 기기로 대처
-		if (FAILED(hardwareResult))
-		{
-			Microsoft::WRL::ComPtr<IDXGIAdapter> pWarpAdapter;
-			ThrowIfFailed(mdxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&pWarpAdapter)));
-
-			ThrowIfFailed(D3D12CreateDevice(pWarpAdapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&md3dDevice)));
-		}
-		//울타리 만들기
-		ThrowIfFailed(md3dDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence)));
-
-		mRtvDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-		mDsvDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
-		mCbvSrvUavDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
-		//품질지원확인
-		D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevels;
-		msQualityLevels.Format = mBackBufferFormat;
-		msQualityLevels.SampleCount = 4;
-		msQualityLevels.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
-		msQualityLevels.NumQualityLevels = 0;
-		ThrowIfFailed(md3dDevice->CheckFeatureSupport(D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS, &msQualityLevels, sizeof(msQualityLevels)));
-
-		m4xMsaaQuality = msQualityLevels.NumQualityLevels;
-		assert(m4xMsaaQuality > 0 && "Unexpected MSAA quality level.");
-
-#ifdef _DEBUG
-		LogAdapters();
-#endif
-
-		CreateCommandObjects();
-		CreateSwapChain();
-		CreateRtvAndDsvDescriptorHeaps();
-
-		return true;
+	return true;
 }
 
 void mD3d12::Update()

@@ -12,6 +12,7 @@ class mD3d12
 
 	int gNumFrames = 3;
 
+	//파이프라인 오브젝트
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> gRTVDescriptorHeap;
 
 	Microsoft::WRL::ComPtr<IDXGIFactory4> mdxgiFactory;
@@ -34,6 +35,8 @@ class mD3d12
 	UINT mDsvDescriptorSize = 0;
 	UINT mCbvSrvUavDescriptorSize = 0;
 
+	UINT dxgiFactoryFlags = 0;
+
 	DXGI_FORMAT mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 	UINT m4xMsaaQuality = 0;//4x msaa 확인
@@ -50,6 +53,12 @@ class mD3d12
 	D3D12_VIEWPORT mScreenViewport;
 	D3D12_RECT mScissorRect;
 
+
+
+
+
+	
+	
 	void EnableDebugLayer();
 
 	void LogAdapters();
@@ -66,6 +75,7 @@ class mD3d12
 	D3D12_CPU_DESCRIPTOR_HANDLE CurrentBackBufferView()const;
 	D3D12_CPU_DESCRIPTOR_HANDLE DepthStencilView()const;
 
+	void LoadPipeline();
 
 public:
 	mD3d12(int mClientWidth, int mClientHeight);
