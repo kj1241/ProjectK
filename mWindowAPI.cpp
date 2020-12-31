@@ -11,15 +11,15 @@ static LRESULT CALLBACK wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 
 
 
-mWindowAPI::mWindowAPI(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, INT nCmdShow) :hInstance(hInstance), hWnd(nullptr), name(L"projectK"), mDirectX12( mClientWidth, mClientHeight)
+mWindowAPI::mWindowAPI(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, INT nCmdShow) :hInstance(hInstance), hWnd(nullptr), name(L"projectK")
 {
 	pWinAPI = this;
+	mainSence = new MainSecne(mClientWidth, mClientHeight);
 }
 
 mWindowAPI::~mWindowAPI()
 {
-
-
+	delete(mainSence);
 }
 
 
@@ -55,8 +55,9 @@ void mWindowAPI::lnitWinAPI()
 
 
 
-	mDirectX12.InitD3D(hWnd);
-	mDirectX12.OnResize();
+	mainSence->InitSecen(hWnd);
+	mainSence->OnResizeSecen();
+	
 
 
 
@@ -105,8 +106,8 @@ void mWindowAPI::Run()
 				Sleep(100);
 			}
 			*/
-			mDirectX12.Update();
-			mDirectX12.Draw();
+			mainSence->UpdateSecen();
+			mainSence->DrawSecen();
 
 
 		}

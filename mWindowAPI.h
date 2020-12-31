@@ -3,7 +3,7 @@
 //#define MWIDOWAPI
 //#endif
 #include "pch.h"
-#include "mD3d12.h"
+#include "mainSecen.h"
 #include "mGameTime.h"
 
 using namespace std;
@@ -17,7 +17,9 @@ protected:
 	int mClientWidth = 1600;  //창 가로
 	int mClientHeight = 900; //창 세로
 
-	mD3d12 mDirectX12;
+	
+	MainSecne *mainSence;
+
 	mGameTimer mTimer; // 타이머
 
 protected:

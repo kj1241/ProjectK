@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//기본 directX12 가 가지고 있는 파이프 라인
 class mD3d12
 {
 	HWND hWnd;

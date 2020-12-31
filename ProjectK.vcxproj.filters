@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\mainScene">
+      <UniqueIdentifier>{9a05a8b9-a8a1-42e7-9d4d-b87a21b1381d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\mainScene">
+      <UniqueIdentifier>{158d559d-7e2a-4986-af46-16b42287ca74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +32,9 @@
     </ClCompile>
     <ClCompile Include="mGameTime.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="mainSecen.cpp">
+      <Filter>소스 파일\mainScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="mGameTime.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mainSecen.h">
+      <Filter>헤더 파일\mainScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

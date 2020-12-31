@@ -142,11 +142,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainSecen.cpp" />
     <ClCompile Include="mD3d12.cpp" />
     <ClCompile Include="mGameTime.cpp" />
     <ClCompile Include="mWindowAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="mainSecen.h" />
     <ClInclude Include="mD3d12.h" />
     <ClInclude Include="md3dUtil.h" />
     <ClInclude Include="mGameTime.h" />
