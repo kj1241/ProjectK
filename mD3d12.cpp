@@ -69,7 +69,28 @@ void mD3d12::LoadPipeline()
 	CreateCommandObjects();
 	CreateSwapChain();
 	CreateRtvAndDsvDescriptorHeaps();
+	CrateConstantBuffers();
 
+
+}
+
+//UploadBuffer의 사이즈와 ConstantBuffer의 byteSize를 연산해서 GPUVirtaulAdress에 크기만큼 공간 잡아주기
+void mD3d12::CrateConstantBuffers()
+{
+	mObjectCB = std::make_unique<UploadBuffer<ObjectConstants>>(md3dDevice.Get(), 1, true);
+
+	UINT objCBByteSize = CalcConstantBufferByteSize(sizeof(ObjectConstants));
+
+	D3D12_GPU_VIRTUAL_ADDRESS cbAddress = mObjectCB->Resource()->GetGPUVirtualAddress();
+	
+	int boxCBufIndex = 0;
+	cbAddress += boxCBufIndex * objCBByteSize;
+
+	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
+	cbvDesc.BufferLocation = cbAddress;
+	cbvDesc.SizeInBytes = CalcConstantBufferByteSize(sizeof(ObjectConstants));
+
+	md3dDevice->CreateConstantBufferView(&cbvDesc,mCbvHeap->GetCPUDescriptorHandleForHeapStart());
 }
 
 
@@ -136,7 +157,7 @@ void mD3d12::LogOutputDisplayModes(IDXGIOutput* output, DXGI_FORMAT format)
 	UINT count = 0;
 	UINT flags = 0;
 
-	// Call with nullptr to get list count.
+	// 목록 수를 얻으려면 nullptr로 호출하십시오.
 	output->GetDisplayModeList(format, flags, &count, nullptr);
 
 	std::vector<DXGI_MODE_DESC> modeList(count);
@@ -220,6 +241,15 @@ void mD3d12::CreateRtvAndDsvDescriptorHeaps()
 	dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	dsvHeapDesc.NodeMask = 0;
 	ThrowIfFailed(md3dDevice->CreateDescriptorHeap(	&dsvHeapDesc, IID_PPV_ARGS(mDsvHeap.GetAddressOf())));
+
+	//자원을 렌더링에 묶기위해 객체. 이경우는 상수  버퍼를 묶기위해서
+	D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc;
+	dsvHeapDesc.NumDescriptors = 1;
+	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;//상수 버퍼 , 쉐이더리소스 뷰. 순서없는 접근 뷰,
+	dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	dsvHeapDesc.NodeMask = 0;
+	ThrowIfFailed(md3dDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(mCbvHeap.GetAddressOf())));
+
 }
 
 void mD3d12::FlushCommandQueue()

@@ -56,5 +56,8 @@
     <ClInclude Include="mainSecen.h">
       <Filter>헤더 파일\mainScene</Filter>
     </ClInclude>
+    <ClInclude Include="mUploadBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

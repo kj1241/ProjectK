@@ -30,6 +30,9 @@ class mD3d12
 	Microsoft::WRL::ComPtr<ID3D12Resource> mSwapChainBuffer[SwapChainBufferCount];
 	Microsoft::WRL::ComPtr<ID3D12Resource> mDepthStencilBuffer;
 
+	
+
+
 	UINT gCurrentBackBufferIndex;
 
 	UINT mRtvDescriptorSize = 0;
@@ -47,6 +50,7 @@ class mD3d12
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mRtvHeap;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDsvHeap;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mCbvHeap;//상수버퍼 , 쉐이더용
 
 	//파생생성자 정의
 	DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -77,6 +81,9 @@ class mD3d12
 	D3D12_CPU_DESCRIPTOR_HANDLE DepthStencilView()const;
 
 	void LoadPipeline();
+
+	void CrateConstantBuffers();
+
 
 public:
 	mD3d12(int mClientWidth, int mClientHeight);
