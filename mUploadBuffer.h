@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "md3dUtil.h"
 
 /// <summary>
 ///  템플릿 헤더 분리 (선언, 구현) 를 해야됨 .h 파일과 .hpp 일딴 중요한 게 아님으로 차후로 미룸
@@ -23,7 +24,7 @@ public:
         // UINT   SizeInBytes;   256의 배수
         // } D3D12_CONSTANT_BUFFER_VIEW_DESC;
         if (isConstantBuffer)
-            mElementByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(T));
+            mElementByteSize = md3dUtil::CalcConstantBufferByteSize(sizeof(T));
 
         ThrowIfFailed(device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD), D3D12_HEAP_FLAG_NONE, &CD3DX12_RESOURCE_DESC::Buffer(mElementByteSize * elementCount), D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&mUploadBuffer)));
 

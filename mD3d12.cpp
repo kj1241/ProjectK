@@ -69,17 +69,22 @@ void mD3d12::LoadPipeline()
 	CreateCommandObjects();
 	CreateSwapChain();
 	CreateRtvAndDsvDescriptorHeaps();
-	CrateConstantBuffers();
+	//CrateConstantBuffers();
 
 
 }
 
+
+
+/*
+* 아직 ......연구중....
+* 
 //UploadBuffer의 사이즈와 ConstantBuffer의 byteSize를 연산해서 GPUVirtaulAdress에 크기만큼 공간 잡아주기
 void mD3d12::CrateConstantBuffers()
 {
 	mObjectCB = std::make_unique<UploadBuffer<ObjectConstants>>(md3dDevice.Get(), 1, true);
 
-	UINT objCBByteSize = CalcConstantBufferByteSize(sizeof(ObjectConstants));
+	UINT objCBByteSize = md3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
 
 	D3D12_GPU_VIRTUAL_ADDRESS cbAddress = mObjectCB->Resource()->GetGPUVirtualAddress();
 	
@@ -88,10 +93,12 @@ void mD3d12::CrateConstantBuffers()
 
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
 	cbvDesc.BufferLocation = cbAddress;
-	cbvDesc.SizeInBytes = CalcConstantBufferByteSize(sizeof(ObjectConstants));
+	cbvDesc.SizeInBytes = md3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
 
 	md3dDevice->CreateConstantBufferView(&cbvDesc,mCbvHeap->GetCPUDescriptorHandleForHeapStart());
 }
+
+*/
 
 
 

@@ -1,6 +1,6 @@
 #include "mGameTime.h"
 
-mGameTimer::mGameTimer() : mSecondsPerCount(0.0), mDeltaTime(-1.0), mBaseTime(0), mPausedTime(0), mPrevTime(0), mCurrTime(0), mStopped(false)
+mGameTimer::mGameTimer() : mSecondsPerCount(0.0), mDeltaTime(-1.0), mBaseTime(0), mPausedTime(0), mPrevTime(0), mCurrTime(0), mStopped(false), mStopTime(0)
 {
 	long long int countsPerSec;
 	QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSec);
@@ -72,8 +72,9 @@ void mGameTimer::Tick()
 		mDeltaTime = 0.0;
 		return;
 	}
-
-	__int64 currTime;
+	
+	
+	long long int currTime;
 	QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
 	mCurrTime = currTime;
 

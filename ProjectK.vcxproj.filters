@@ -36,6 +36,18 @@
     <ClCompile Include="mainSecen.cpp">
       <Filter>소스 파일\mainScene</Filter>
     </ClCompile>
+    <ClCompile Include="mMath.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="mFrameResource.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="mWave.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="md3dUtil.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -57,6 +69,15 @@
       <Filter>헤더 파일\mainScene</Filter>
     </ClInclude>
     <ClInclude Include="mUploadBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mFrameResource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mMath.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mWave.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

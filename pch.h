@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream> // c++
+#include <fstream> //파일 입출력
 
 #include "d3dx12.h" //확장 다운받음
 #include "md3dUtil.h"
@@ -23,6 +24,10 @@
 #include <algorithm> //알고리즘
 #include <vector>
 #include <string>
+
+#include <DirectXMath.h>
+#include <cstdint> //stdint.h 자료 정수형
+
 
 
 //#pragma comment(lib,"d3dcompiler.lib")

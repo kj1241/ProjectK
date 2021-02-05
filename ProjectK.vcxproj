@@ -144,15 +144,22 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainSecen.cpp" />
     <ClCompile Include="mD3d12.cpp" />
+    <ClCompile Include="md3dUtil.cpp" />
+    <ClCompile Include="mFrameResource.cpp" />
     <ClCompile Include="mGameTime.cpp" />
+    <ClCompile Include="mMath.cpp" />
+    <ClCompile Include="mWave.cpp" />
     <ClCompile Include="mWindowAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainSecen.h" />
     <ClInclude Include="mD3d12.h" />
     <ClInclude Include="md3dUtil.h" />
+    <ClInclude Include="mFrameResource.h" />
     <ClInclude Include="mGameTime.h" />
+    <ClInclude Include="mMath.h" />
     <ClInclude Include="mUploadBuffer.h" />
+    <ClInclude Include="mWave.h" />
     <ClInclude Include="mWindowAPI.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
