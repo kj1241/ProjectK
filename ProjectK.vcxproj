@@ -141,8 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainSecen.cpp" />
+    <ClCompile Include="mCamera.cpp" />
     <ClCompile Include="mD3d12.cpp" />
     <ClCompile Include="md3dUtil.cpp" />
     <ClCompile Include="mFrameResource.cpp" />
@@ -152,7 +154,9 @@
     <ClCompile Include="mWindowAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="mainSecen.h" />
+    <ClInclude Include="mCamera.h" />
     <ClInclude Include="mD3d12.h" />
     <ClInclude Include="md3dUtil.h" />
     <ClInclude Include="mFrameResource.h" />

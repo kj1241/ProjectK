@@ -27,6 +27,9 @@
 
 #include <DirectXMath.h>
 #include <cstdint> //stdint.h 자료 정수형
+#include <cassert> // assert.h 디버깅 모드에서만 작동
+#include <ppl.h>  //병렬처리를 위한 알고리즘
+#include <memory>
 
 
 

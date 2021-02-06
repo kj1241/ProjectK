@@ -284,6 +284,12 @@ mD3d12::mD3d12(int mClientWidth, int mClientHeight) : mClientWidth(mClientWidth)
 {
 }
 
+mD3d12::~mD3d12()
+{
+	if (md3dDevice != nullptr)
+		FlushCommandQueue();
+}
+
 bool mD3d12::InitD3D(HWND hwnd)
 {
     hWnd = hwnd;

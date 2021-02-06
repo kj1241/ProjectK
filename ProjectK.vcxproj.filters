@@ -19,6 +19,12 @@
     <Filter Include="헤더 파일\mainScene">
       <UniqueIdentifier>{158d559d-7e2a-4986-af46-16b42287ca74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\object">
+      <UniqueIdentifier>{1a93cc84-64c4-4a56-8da9-19f38ff2d56f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\object">
+      <UniqueIdentifier>{6d6ed9d6-4ea6-4cba-b67f-40803dcbfdc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="md3dUtil.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="mCamera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>소스 파일\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="mWave.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>헤더 파일\object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

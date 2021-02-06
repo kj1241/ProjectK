@@ -6,6 +6,7 @@ using namespace std;
 //기본 directX12 가 가지고 있는 파이프 라인
 class mD3d12
 {
+protected:
 	HWND hWnd;
 
 	int mClientWidth = 0;//클라이언트 가로크기
@@ -87,11 +88,12 @@ class mD3d12
 
 public:
 	mD3d12(int mClientWidth, int mClientHeight);
+	virtual ~mD3d12();
 
-	bool InitD3D(HWND hWnd);
-	void Update();  //
-	void Draw(); //그리기
+	virtual bool InitD3D(HWND hWnd);
+	virtual void Update();  //
+	virtual void Draw(); //그리기
 
-	void OnResize();
+	virtual void OnResize();
 
 };
